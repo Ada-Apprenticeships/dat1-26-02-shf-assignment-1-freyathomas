@@ -39,6 +39,10 @@ CREATE TABLE staff (
     position TEXT NOT NULL CHECK(position IN ('Trainer', 'Manager', 'Receptionist', 'Maintenance')),
     hire_date TEXT NOT NULL,
     location_id INTEGER NOT NULL 
+    FOREIGN KEY (location_id) 
+        REFERENCES locations(location_id)
+        ON DELETE NO ACTION
+
     );
 
 DROP TABLE IF EXISTS equipment;
@@ -51,6 +55,9 @@ CREATE TABLE equipment (
     last_maintenance_date TEXT NOT NULL,
     next_maintenance_date TEXT NOT NULL,
     location_id INTEGER NOT NULL
+    FOREIGN KEY (location_id) 
+        REFERENCES locations(location_id)
+        ON DELETE NO ACTION
     );
 
 DROP TABLE IF EXISTS classes;
@@ -62,6 +69,9 @@ CREATE TABLE classes (
     capacity INTEGER NOT NULL,
     duration INTEGER NOT NULL,
     location_id INTEGER NOT NULL
+    FOREIGN KEY (location_id) 
+        REFERENCES locations(location_id)
+        ON DELETE NO ACTION
     );
 
 DROP TABLE IF EXISTS class_schedule;
@@ -72,6 +82,12 @@ CREATE TABLE class_schedule (
     staff_id INTEGER NOT NULL,
     start_time TEXT NOT NULL,
     end_time TEXT NOT NULL
+    FOREIGN KEY (class_id) 
+        REFERENCES classes(class_id)
+        ON DELETE NO ACTION
+    FOREIGN KEY (staff_id) 
+        REFERENCES staff(staff_id)
+        ON DELETE NO ACTION
     );
 
 DROP TABLE IF EXISTS memberships;
@@ -83,6 +99,9 @@ CREATE TABLE memberships (
     start_date TEXT NOT NULL,
     end_date TEXT NOT NULL,
     status TEXT NOT NULL CHECK (status IN ('Active', 'Inactive'))
+    FOREIGN KEY (member_id) 
+        REFERENCES members(member_id)
+        ON DELETE NO ACTION
     );
 
 DROP TABLE IF EXISTS attendance;
@@ -93,6 +112,12 @@ CREATE TABLE attendance (
     location_id INTEGER NOT NULL,
     check_in_time TEXT NOT NULL,
     check_out_time TEXT NOT NULL
+    FOREIGN KEY (location_id) 
+        REFERENCES locations(location_id)
+        ON DELETE NO ACTION
+    FOREIGN KEY (member_id) 
+        REFERENCES members(member_id)
+        ON DELETE NO ACTION
     );
 
 DROP TABLE IF EXISTS class_attendance;
@@ -102,6 +127,12 @@ CREATE TABLE class_attendance (
     schedule_id INTEGER NOT NULL,
     member_id INTEGER NOT NULL,
     attendance_status TEXT NOT NULL CHECK(attendance_status IN ('Registered', 'Attended', 'Unattended'))
+    FOREIGN KEY (member_id) 
+        REFERENCES members(member_id)
+        ON DELETE NO ACTION
+    FOREIGN KEY (schedule_id) 
+        REFERENCES class_schedule(schedule_id)
+        ON DELETE NO ACTION
     );
 
 DROP TABLE IF EXISTS payments;
@@ -111,8 +142,11 @@ CREATE TABLE payments (
     member_id INTEGER NOT NULL,
     amount REAL NOT NULL,
     payment_date TEXT NOT NULL,
-    payment_method TEXT NOT NULL CHECK(payment_method IN ('Credit Card', 'Bank Transfer', 'PayPal')),
+    payment_method TEXT NOT NULL CHECK(payment_method IN ('Credit Card', 'Bank Transfer', 'PayPal', 'Cash')),
     payment_type TEXT NOT NULL CHECK(payment_type IN ('Monthly membership fee', 'Day pass'))
+    FOREIGN KEY (member_id) 
+        REFERENCES members(member_id)
+        ON DELETE NO ACTION
     );
 
 DROP TABLE IF EXISTS personal_training_sessions;
@@ -125,6 +159,12 @@ CREATE TABLE personal_training_sessions (
     start_time TEXT NOT NULL,
     end_time TEXT NOT NULL,
     notes TEXT NOT NULL CHECK(length(notes) < 200)
+    FOREIGN KEY (member_id) 
+        REFERENCES members(member_id)
+        ON DELETE NO ACTION
+    FOREIGN KEY (staff_id) 
+        REFERENCES staff(staff_id)
+        ON DELETE NO ACTION
     );
 
 DROP TABLE IF EXISTS member_health_metrics;
@@ -137,6 +177,9 @@ CREATE TABLE member_health_metrics (
     body_fat_percentage REAL NOT NULL,
     muscle_mass REAL NOT NULL,
     bmi REAL NOT NULL
+    FOREIGN KEY (member_id) 
+        REFERENCES members(member_id)
+        ON DELETE NO ACTION
     );
 
 DROP TABLE IF EXISTS equipment_maintenance_log;
@@ -147,5 +190,11 @@ CREATE TABLE equipment_maintenance_log (
     maintenance_date TEXT NOT NULL,
     description TEXT NOT NULL CHECK(length(description) < 200),
     staff_id INTEGER NOT NULL
+    FOREIGN KEY (equipment_id) 
+        REFERENCES equipment(equipment_id)
+        ON DELETE NO ACTION
+    FOREIGN KEY (staff_id) 
+        REFERENCES staff(staff_id)
+        ON DELETE NO ACTION
     );
 
