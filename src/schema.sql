@@ -1,123 +1,151 @@
 .open fittrackpro.db
 .mode column
 
+PRAGMA foreign_keys = ON;
+
+DROP TABLE IF EXISTS locations;
+
 CREATE TABLE locations (
-    location_id TEXT NOT NULL PRIMARY KEY,
+    location_id INTEGER NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
     address TEXT NOT NULL,
     phone_number INTEGER NOT NULL ,
     email UNIQUE CHECK (email IS NULL OR instr(email, '@') > 1),
-    opening_hours TIME TEXT
+    opening_hours TEXT NOT NULL
     );
+
+DROP TABLE IF EXISTS members;
 
 CREATE TABLE members (
-    member_id TEXT NOT NULL PRIMARY KEY,
+    member_id INTEGER NOT NULL PRIMARY KEY,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     email UNIQUE CHECK (email IS NULL OR instr(email, '@') > 1),
-    phone_number INTEGER NOT NULL,
-    date_of_birth DATE TEXT NOT NULL,
-    join_date DATE TEXT NOT NULL,
+    phone_number TEXT NOT NULL,
+    date_of_birth TEXT NOT NULL,
+    join_date TEXT NOT NULL,
     emergency_contact_name TEXT NOT NULL,
-    emergency_contact_phone INTEGER NOT NULL
+    emergency_contact_phone TEXT NOT NULL
     );
 
+DROP TABLE IF EXISTS staff;
+
 CREATE TABLE staff (
-    staff_id TEXT NOT NULL PRIMARY KEY,
+    staff_id INTEGER NOT NULL PRIMARY KEY,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     email UNIQUE CHECK (email IS NULL OR instr(email, '@') > 1),
-    phone_number INTEGER NOT NULL,
-    position TEXT NOT NULL CHECK(position IN ('Trainer', 'Manager', 'Receptionist', 'Maintenance'))
-    hire_date DATE TEXT NOT NULL,
-    location_id TEXT NOT NULL 
+    phone_number TEXT NOT NULL,
+    position TEXT NOT NULL CHECK(position IN ('Trainer', 'Manager', 'Receptionist', 'Maintenance')),
+    hire_date TEXT NOT NULL,
+    location_id INTEGER NOT NULL 
     );
-    
+
+DROP TABLE IF EXISTS equipment;
+
 CREATE TABLE equipment (
     equipment_id TEXT NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
-    type TEXT NOT NULL CHECK(type IN ('Cardio', 'Strength'))
-    purchase_date DATE TEXT NOT NULL,
-    last_maintenance_date DATE TEXT NOT NULL,
-    next_maintenance_date DATE TEXT NOT NULL,
-    location_id TEXT NOT NULL
+    type TEXT NOT NULL CHECK(type IN ('Cardio', 'Strength')),
+    purchase_date TEXT NOT NULL,
+    last_maintenance_date TEXT NOT NULL,
+    next_maintenance_date TEXT NOT NULL,
+    location_id INTEGER NOT NULL
     );
 
+DROP TABLE IF EXISTS classes;
+
 CREATE TABLE classes (
-    class_id TEXT NOT NULL PRIMARY KEY,
+    class_id INTEGER NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     capacity INTEGER NOT NULL,
     duration INTEGER NOT NULL,
-    location_id TEXT NOT NULL
+    location_id INTEGER NOT NULL
     );
+
+DROP TABLE IF EXISTS class_schedule;
 
 CREATE TABLE class_schedule (
-    schedule_id TEXT NOT NULL,
-    class_id TEXT NOT NULL,
-    staff_id TEXT NOT NULL,
-    start_time DATE TIME TEXT NOT NULL,
-    end_time DATE TIME TEXT NOT NULL
+    schedule_id INTEGER NOT NULL PRIMARY KEY,
+    class_id INTEGER NOT NULL,
+    staff_id INTEGER NOT NULL,
+    start_time TEXT NOT NULL,
+    end_time TEXT NOT NULL
     );
 
+DROP TABLE IF EXISTS memberships;
+
 CREATE TABLE memberships (
-    membership_id TEXT NOT NULL PRIMARY KEY,
-    member_id TEXT NOT NULL,
-    type TEXT NOT NULL CHECK (type IN ('Premium', 'Standard')
-    start_date DATE TEXT NOT NULL,
-    end_date DATE TEXT NOT NULL,
+    membership_id INTEGER NOT NULL PRIMARY KEY,
+    member_id INTEGER NOT NULL,
+    type TEXT NOT NULL CHECK (type IN ('Premium', 'Standard')),
+    start_date TEXT NOT NULL,
+    end_date TEXT NOT NULL,
     status TEXT NOT NULL CHECK (status IN ('Active', 'Inactive'))
     );
 
+DROP TABLE IF EXISTS attendance;
+
 CREATE TABLE attendance (
-    attendance_id TEXT NOT NULL PRIMARY KEY,
-    member_id TEXT NOT NULL,
-    location_id TEXT NOT NULL,
-    check_in_time DATE TIME TEXT NOT NULL,
-    check_out_time DATE TIME TEXT NOT NULL
+    attendance_id INTEGER NOT NULL PRIMARY KEY,
+    member_id INTEGER NOT NULL,
+    location_id INTEGER NOT NULL,
+    check_in_time TEXT NOT NULL,
+    check_out_time TEXT NOT NULL
     );
+
+DROP TABLE IF EXISTS class_attendance;
 
 CREATE TABLE class_attendance (
-    class_attendance_id TEXT NOT NULL PRIMARY KEY,
-    schedule_id TEXT NOT NULL,
-    member_id TEXT NOT NULL,
-    attendance_status TEXT NOT NULL CHECK(attendance_status IN 'Registered', 'Attended', 'Unattended'))
+    class_attendance_id INTEGER NOT NULL PRIMARY KEY,
+    schedule_id INTEGER NOT NULL,
+    member_id INTEGER NOT NULL,
+    attendance_status TEXT NOT NULL CHECK(attendance_status IN ('Registered', 'Attended', 'Unattended'))
     );
+
+DROP TABLE IF EXISTS payments;
 
 CREATE TABLE payments (
-    payment_id,
-    member_id,
-    amount,
-    payment_date,
-    payment_method,
-    payment_type
+    payment_id INTEGER NOT NULL PRIMARY KEY ,
+    member_id INTEGER NOT NULL,
+    amount REAL NOT NULL,
+    payment_date TEXT NOT NULL,
+    payment_method TEXT NOT NULL CHECK(payment_method IN ('Credit Card', 'Bank Transfer', 'PayPal')),
+    payment_type TEXT NOT NULL CHECK(payment_type IN ('Monthly membership fee', 'Day pass'))
     );
+
+DROP TABLE IF EXISTS personal_training_sessions;
 
 CREATE TABLE personal_training_sessions (
-    session_id,
-    member_id,
-    staff_id,
-    session_date,
-    start_time,
-    end_time,
-    notes
+    session_id INTEGER NOT NULL PRIMARY KEY,
+    member_id INTEGER NOT NULL,
+    staff_id INTEGER NOT NULL,
+    session_date TEXT NOT NULL,
+    start_time TEXT NOT NULL,
+    end_time TEXT NOT NULL,
+    notes TEXT NOT NULL CHECK(length(notes) < 200)
     );
+
+DROP TABLE IF EXISTS member_health_metrics;
 
 CREATE TABLE member_health_metrics (
-    metric_id,
-    member_id,
-    measurement_date,
-    weight,
-    body_fat_percentage,
-    muscle_mass,
-    bmi
+    metric_id INTEGER NOT NULL PRIMARY KEY,
+    member_id INTEGER NOT NULL,
+    measurement_date TEXT NOT NULL,
+    weight REAL NOT NULL,
+    body_fat_percentage REAL NOT NULL,
+    muscle_mass REAL NOT NULL,
+    bmi REAL NOT NULL
     );
 
+DROP TABLE IF EXISTS equipment_maintenance_log;
+
 CREATE TABLE equipment_maintenance_log (
-    log_id,
-    equipment_id,
-    maintenance_date,
-    description,
-    staff_id
+    log_id INTEGER NOT NULL PRIMARY KEY,
+    equipment_id INTEGER NOT NULL,
+    maintenance_date TEXT NOT NULL,
+    description TEXT NOT NULL CHECK(length(description) < 200),
+    staff_id INTEGER NOT NULL
     );
 
