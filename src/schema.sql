@@ -2,86 +2,86 @@
 .mode column
 
 CREATE TABLE locations (
-    location_id NOT NULL ,
-    name,
-    address,
-    phone_number,
-    email,
-    opening_hours
+    location_id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    address TEXT NOT NULL,
+    phone_number INTEGER NOT NULL ,
+    email UNIQUE CHECK (email IS NULL OR instr(email, '@') > 1),
+    opening_hours TIME TEXT
     );
 
 CREATE TABLE members (
-    member_id,
-    first_name,
-    last_name,
-    email,
-    phone_number,
-    date_of_birth,
-    join_date,
-    emergency_contact_name,
-    emergency_contact_phone
+    member_id TEXT NOT NULL PRIMARY KEY,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    email UNIQUE CHECK (email IS NULL OR instr(email, '@') > 1),
+    phone_number INTEGER NOT NULL,
+    date_of_birth DATE TEXT NOT NULL,
+    join_date DATE TEXT NOT NULL,
+    emergency_contact_name TEXT NOT NULL,
+    emergency_contact_phone INTEGER NOT NULL
     );
 
 CREATE TABLE staff (
-    staff_id,
-    first_name,
-    last_name,
-    email,
-    phone_number,
-    position,
-    hire_date,
-    location_id
+    staff_id TEXT NOT NULL PRIMARY KEY,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    email UNIQUE CHECK (email IS NULL OR instr(email, '@') > 1),
+    phone_number INTEGER NOT NULL,
+    position TEXT NOT NULL CHECK(position IN ('Trainer', 'Manager', 'Receptionist', 'Maintenance'))
+    hire_date DATE TEXT NOT NULL,
+    location_id TEXT NOT NULL 
     );
     
 CREATE TABLE equipment (
-    equipment_id,
-    name,
-    type,
-    purchase_date,
-    last_maintenance_date,
-    next_maintenance_date,
-    location_id
+    equipment_id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    type TEXT NOT NULL CHECK(type IN ('Cardio', 'Strength'))
+    purchase_date DATE TEXT NOT NULL,
+    last_maintenance_date DATE TEXT NOT NULL,
+    next_maintenance_date DATE TEXT NOT NULL,
+    location_id TEXT NOT NULL
     );
 
 CREATE TABLE classes (
-    class_id,
-    name,
-    description,
-    capacity,
-    duration,
-    location_id
+    class_id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    capacity INTEGER NOT NULL,
+    duration INTEGER NOT NULL,
+    location_id TEXT NOT NULL
     );
 
 CREATE TABLE class_schedule (
-    schedule_id,
-    class_id,
-    staff_id,
-    start_time,
-    end_time
+    schedule_id TEXT NOT NULL,
+    class_id TEXT NOT NULL,
+    staff_id TEXT NOT NULL,
+    start_time DATE TIME TEXT NOT NULL,
+    end_time DATE TIME TEXT NOT NULL
     );
 
 CREATE TABLE memberships (
-    membership_id,
-    member_id,
-    type,
-    start_date,
-    end_date,
-    status
+    membership_id TEXT NOT NULL PRIMARY KEY,
+    member_id TEXT NOT NULL,
+    type TEXT NOT NULL CHECK (type IN ('Premium', 'Standard')
+    start_date DATE TEXT NOT NULL,
+    end_date DATE TEXT NOT NULL,
+    status TEXT NOT NULL CHECK (status IN ('Active', 'Inactive'))
     );
 
 CREATE TABLE attendance (
-    attendance_id,
-    member_id,
-    location_id,
-    check_in_time,
-    check_out_time
+    attendance_id TEXT NOT NULL PRIMARY KEY,
+    member_id TEXT NOT NULL,
+    location_id TEXT NOT NULL,
+    check_in_time DATE TIME TEXT NOT NULL,
+    check_out_time DATE TIME TEXT NOT NULL
     );
 
 CREATE TABLE class_attendance (
-    class_attendance_id,
-    schedule_id,
-    member_id,
-    attendance_status
+    class_attendance_id TEXT NOT NULL PRIMARY KEY,
+    schedule_id TEXT NOT NULL,
+    member_id TEXT NOT NULL,
+    attendance_status TEXT NOT NULL CHECK(attendance_status IN 'Registered', 'Attended', 'Unattended'))
     );
 
 CREATE TABLE payments (
