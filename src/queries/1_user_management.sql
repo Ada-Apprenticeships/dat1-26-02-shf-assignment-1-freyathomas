@@ -20,6 +20,8 @@ FROM members
 WHERE (SELECT MAX(registered) 
         FROM class_attendance 
         WHERE( SELECT COUNT(attendance_status)
+
+        group by mid fn ln rgc order by and limit to show one
              
 
 -- 1.5
