@@ -6,7 +6,8 @@ INSERT INTO payments (payment_id,member_id,amount,payment_date,payment_method,pa
 (8,11,50.00,'now','Credit Card','Monthly membership fee');
 
 -- 2.2 
-SELECT 
+SELECT month, COUNT(*) AS total_revenue(
+    SELECT revenue 
 
 -- 2.3 
 
