@@ -38,7 +38,7 @@ CREATE TABLE staff (
     phone_number TEXT NOT NULL,
     position TEXT NOT NULL CHECK(position IN ('Trainer', 'Manager', 'Receptionist', 'Maintenance')),
     hire_date TEXT NOT NULL,
-    location_id INTEGER NOT NULL 
+    location_id INTEGER NOT NULL,
     FOREIGN KEY (location_id) 
         REFERENCES locations(location_id)
         ON DELETE NO ACTION
@@ -54,7 +54,7 @@ CREATE TABLE equipment (
     purchase_date TEXT NOT NULL,
     last_maintenance_date TEXT NOT NULL,
     next_maintenance_date TEXT NOT NULL,
-    location_id INTEGER NOT NULL
+    location_id INTEGER NOT NULL,
     FOREIGN KEY (location_id) 
         REFERENCES locations(location_id)
         ON DELETE NO ACTION
@@ -68,7 +68,7 @@ CREATE TABLE classes (
     description TEXT NOT NULL,
     capacity INTEGER NOT NULL,
     duration INTEGER NOT NULL,
-    location_id INTEGER NOT NULL
+    location_id INTEGER NOT NULL,
     FOREIGN KEY (location_id) 
         REFERENCES locations(location_id)
         ON DELETE NO ACTION
@@ -81,7 +81,7 @@ CREATE TABLE class_schedule (
     class_id INTEGER NOT NULL,
     staff_id INTEGER NOT NULL,
     start_time TEXT NOT NULL,
-    end_time TEXT NOT NULL
+    end_time TEXT NOT NULL,
     FOREIGN KEY (class_id) 
         REFERENCES classes(class_id)
         ON DELETE NO ACTION
@@ -98,7 +98,7 @@ CREATE TABLE memberships (
     type TEXT NOT NULL CHECK (type IN ('Premium', 'Standard')),
     start_date TEXT NOT NULL,
     end_date TEXT NOT NULL,
-    status TEXT NOT NULL CHECK (status IN ('Active', 'Inactive'))
+    status TEXT NOT NULL CHECK (status IN ('Active', 'Inactive')),
     FOREIGN KEY (member_id) 
         REFERENCES members(member_id)
         ON DELETE NO ACTION
@@ -111,7 +111,7 @@ CREATE TABLE attendance (
     member_id INTEGER NOT NULL,
     location_id INTEGER NOT NULL,
     check_in_time TEXT NOT NULL,
-    check_out_time TEXT NOT NULL
+    check_out_time TEXT NOT NULL,
     FOREIGN KEY (location_id) 
         REFERENCES locations(location_id)
         ON DELETE NO ACTION
@@ -126,7 +126,7 @@ CREATE TABLE class_attendance (
     class_attendance_id INTEGER NOT NULL PRIMARY KEY,
     schedule_id INTEGER NOT NULL,
     member_id INTEGER NOT NULL,
-    attendance_status TEXT NOT NULL CHECK(attendance_status IN ('Registered', 'Attended', 'Unattended'))
+    attendance_status TEXT NOT NULL CHECK(attendance_status IN ('Registered', 'Attended', 'Unattended')),
     FOREIGN KEY (member_id) 
         REFERENCES members(member_id)
         ON DELETE NO ACTION
@@ -143,7 +143,7 @@ CREATE TABLE payments (
     amount REAL NOT NULL,
     payment_date TEXT NOT NULL,
     payment_method TEXT NOT NULL CHECK(payment_method IN ('Credit Card', 'Bank Transfer', 'PayPal', 'Cash')),
-    payment_type TEXT NOT NULL CHECK(payment_type IN ('Monthly membership fee', 'Day pass'))
+    payment_type TEXT NOT NULL CHECK(payment_type IN ('Monthly membership fee', 'Day pass')),
     FOREIGN KEY (member_id) 
         REFERENCES members(member_id)
         ON DELETE NO ACTION
@@ -158,7 +158,7 @@ CREATE TABLE personal_training_sessions (
     session_date TEXT NOT NULL,
     start_time TEXT NOT NULL,
     end_time TEXT NOT NULL,
-    notes TEXT NOT NULL CHECK(length(notes) < 200)
+    notes TEXT NOT NULL CHECK(length(notes) < 200),
     FOREIGN KEY (member_id) 
         REFERENCES members(member_id)
         ON DELETE NO ACTION
@@ -176,7 +176,7 @@ CREATE TABLE member_health_metrics (
     weight REAL NOT NULL,
     body_fat_percentage REAL NOT NULL,
     muscle_mass REAL NOT NULL,
-    bmi REAL NOT NULL
+    bmi REAL NOT NULL,
     FOREIGN KEY (member_id) 
         REFERENCES members(member_id)
         ON DELETE NO ACTION
@@ -189,7 +189,7 @@ CREATE TABLE equipment_maintenance_log (
     equipment_id INTEGER NOT NULL,
     maintenance_date TEXT NOT NULL,
     description TEXT NOT NULL CHECK(length(description) < 200),
-    staff_id INTEGER NOT NULL
+    staff_id INTEGER NOT NULL,
     FOREIGN KEY (equipment_id) 
         REFERENCES equipment(equipment_id)
         ON DELETE NO ACTION

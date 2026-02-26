@@ -1,4 +1,5 @@
 .open fittrackpro.db
+.headers
 .mode column
 
 -- 1.1
@@ -7,11 +8,12 @@ FROM members;
 
 -- 1.2
 UPDATE members 
-SET phone_number='07000 10005', email='emily.jones.updated@email.com'
+SET phone_number='07000 10005', 
+        email='emily.jones.updated@email.com'
 WHERE member_id = 5;
 
 -- 1.3
-SELECT COUNT(member_id) AS myCount
+SELECT COUNT(*) AS myCount
 FROM members;
 
 -- 1.4
@@ -39,7 +41,7 @@ ORDER BY registration_count ASC
 LIMIT 1;
 
 -- 1.6
-SELECT COUNT(*) AS two_class_count
+SELECT COUNT(*) AS Count
 FROM (
         SELECT m.member_id
         FROM members AS m
