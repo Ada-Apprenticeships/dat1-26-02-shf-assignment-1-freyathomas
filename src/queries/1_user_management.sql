@@ -15,17 +15,38 @@ SELECT COUNT(member_id) AS myCount
 FROM members;
 
 -- 1.4
-SELECT member_id, first_name, last_name, registration_count
-FROM members
-WHERE (SELECT MAX(registered) 
-        FROM class_attendance 
-        WHERE( SELECT COUNT(attendance_status)
-
-        group by mid fn ln rgc order by and limit to show one
-             
+SELECT m.member_id, m.first_name, m.last_name, COUNT(c.member_id) AS registration_count
+FROM members AS m
+JOIN class_attendance AS c 
+    ON m.member_id = c.member_id
+GROUP BY 
+    m.member_id, 
+    m.first_name, 
+    m.last_name
+ORDER BY registration_count DESC
+LIMIT 1;
 
 -- 1.5
-
+SELECT m.member_id, m.first_name, m.last_name, COUNT(c.member_id) AS registration_count
+FROM members AS m
+LEFT JOIN class_attendance AS c 
+    ON m.member_id = c.member_id
+GROUP BY 
+    m.member_id, 
+    m.first_name, 
+    m.last_name
+ORDER BY registration_count ASC
+LIMIT 1;
 
 -- 1.6
+SELECT COUNT(*) AS two_class_count
+FROM (
+        SELECT m.member_id
+        FROM members AS m
+        JOIN class_attendance AS c
+                ON m.member_id = c.member_id
+        WHERE c.attendance_status = 'Attended'
+        GROUP BY m.member_id
+        HAVING COUNT(c.member_id) >= 2
+);
 
