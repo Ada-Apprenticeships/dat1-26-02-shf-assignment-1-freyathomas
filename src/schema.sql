@@ -6,7 +6,7 @@ PRAGMA foreign_keys = ON;
 DROP TABLE IF EXISTS locations;
 
 CREATE TABLE locations (
-    location_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    location_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     address TEXT NOT NULL,
     phone_number INTEGER NOT NULL ,
@@ -17,7 +17,7 @@ CREATE TABLE locations (
 DROP TABLE IF EXISTS members;
 
 CREATE TABLE members (
-    member_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    member_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     email UNIQUE CHECK (email IS NULL OR instr(email, '@') > 1),
@@ -31,7 +31,7 @@ CREATE TABLE members (
 DROP TABLE IF EXISTS staff;
 
 CREATE TABLE staff (
-    staff_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    staff_id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     email UNIQUE CHECK (email IS NULL OR instr(email, '@') > 1),
@@ -48,7 +48,7 @@ CREATE TABLE staff (
 DROP TABLE IF EXISTS equipment;
 
 CREATE TABLE equipment (
-    equipment_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    equipment_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     type TEXT NOT NULL CHECK(type IN ('Cardio', 'Strength')),
     purchase_date TEXT NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE equipment (
 DROP TABLE IF EXISTS classes;
 
 CREATE TABLE classes (
-    class_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    class_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     capacity INTEGER NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE classes (
 DROP TABLE IF EXISTS class_schedule;
 
 CREATE TABLE class_schedule (
-    schedule_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    schedule_id INTEGER PRIMARY KEY AUTOINCREMENT,
     class_id INTEGER NOT NULL,
     staff_id INTEGER NOT NULL,
     start_time TEXT NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE class_schedule (
 DROP TABLE IF EXISTS memberships;
 
 CREATE TABLE memberships (
-    membership_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    membership_id INTEGER PRIMARY KEY AUTOINCREMENT,
     member_id INTEGER NOT NULL,
     type TEXT NOT NULL CHECK (type IN ('Premium', 'Standard')),
     start_date TEXT NOT NULL,
@@ -107,11 +107,11 @@ CREATE TABLE memberships (
 DROP TABLE IF EXISTS attendance;
 
 CREATE TABLE attendance (
-    attendance_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    attendance_id INTEGER PRIMARY KEY AUTOINCREMENT ,
     member_id INTEGER NOT NULL,
     location_id INTEGER NOT NULL,
     check_in_time TEXT NOT NULL DEFAULT (DATETIME('now')),
-    check_out_time TEXT NULL DEFAULT (DATETIME('now')),
+    check_out_time TEXT DEFAULT NULL,
     FOREIGN KEY (location_id) 
         REFERENCES locations(location_id)
         ON DELETE NO ACTION,
@@ -123,7 +123,7 @@ CREATE TABLE attendance (
 DROP TABLE IF EXISTS class_attendance;
 
 CREATE TABLE class_attendance (
-    class_attendance_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    class_attendance_id INTEGER PRIMARY KEY AUTOINCREMENT,
     schedule_id INTEGER NOT NULL,
     member_id INTEGER NOT NULL,
     attendance_status TEXT NOT NULL CHECK(attendance_status IN ('Registered', 'Attended', 'Unattended')),
@@ -138,7 +138,7 @@ CREATE TABLE class_attendance (
 DROP TABLE IF EXISTS payments;
 
 CREATE TABLE payments (
-    payment_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    payment_id INTEGER PRIMARY KEY AUTOINCREMENT,
     member_id INTEGER NOT NULL,
     amount REAL NOT NULL,
     payment_date TEXT NOT NULL,
@@ -152,7 +152,7 @@ CREATE TABLE payments (
 DROP TABLE IF EXISTS personal_training_sessions;
 
 CREATE TABLE personal_training_sessions (
-    session_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    session_id INTEGER PRIMARY KEY AUTOINCREMENT ,
     member_id INTEGER NOT NULL,
     staff_id INTEGER NOT NULL,
     session_date TEXT NOT NULL,
@@ -170,7 +170,7 @@ CREATE TABLE personal_training_sessions (
 DROP TABLE IF EXISTS member_health_metrics;
 
 CREATE TABLE member_health_metrics (
-    metric_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    metric_id INTEGER PRIMARY KEY AUTOINCREMENT,
     member_id INTEGER NOT NULL,
     measurement_date TEXT NOT NULL,
     weight REAL NOT NULL,
@@ -185,7 +185,7 @@ CREATE TABLE member_health_metrics (
 DROP TABLE IF EXISTS equipment_maintenance_log;
 
 CREATE TABLE equipment_maintenance_log (
-    log_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    log_id INTEGER PRIMARY KEY AUTOINCREMENT,
     equipment_id INTEGER NOT NULL,
     maintenance_date TEXT NOT NULL,
     description TEXT NOT NULL CHECK(length(description) < 200),
