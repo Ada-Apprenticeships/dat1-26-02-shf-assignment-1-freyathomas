@@ -48,7 +48,7 @@ CREATE TABLE staff (
 DROP TABLE IF EXISTS equipment;
 
 CREATE TABLE equipment (
-    equipment_id TEXT NOT NULL PRIMARY KEY AUTOINCREMENT,
+    equipment_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     type TEXT NOT NULL CHECK(type IN ('Cardio', 'Strength')),
     purchase_date TEXT NOT NULL,
@@ -110,8 +110,8 @@ CREATE TABLE attendance (
     attendance_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     member_id INTEGER NOT NULL,
     location_id INTEGER NOT NULL,
-    check_in_time TEXT NOT NULL,
-    check_out_time TEXT NOT NULL,
+    check_in_time TEXT NOT NULL DEFAULT (DATETIME('now')),
+    check_out_time TEXT NULL DEFAULT (DATETIME('now')),
     FOREIGN KEY (location_id) 
         REFERENCES locations(location_id)
         ON DELETE NO ACTION,
