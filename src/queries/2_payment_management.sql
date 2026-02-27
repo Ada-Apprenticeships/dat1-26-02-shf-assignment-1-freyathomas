@@ -2,8 +2,8 @@
 .mode column
 
 -- 2.1 
-INSERT INTO payments (payment_id,member_id,amount,payment_date,payment_method,payment_type) VALUES
-(8,11,50.00,'now','Credit Card','Monthly membership fee');
+INSERT INTO payments (member_id,amount,payment_date,payment_method,payment_type) VALUES
+(11,50.00,'now','Credit Card','Monthly membership fee');
 
 -- 2.2 
 SELECT strftime('%m', payment_date) AS month, SUM(amount) AS total_revenue
