@@ -3,7 +3,19 @@
 
 PRAGMA foreign_keys = ON;
 
+DROP TABLE IF EXISTS class_attendance;
+DROP TABLE IF EXISTS attendance;
+DROP TABLE IF EXISTS memberships;
+DROP TABLE IF EXISTS class_schedule;
+DROP TABLE IF EXISTS classes;
+DROP TABLE IF EXISTS equipment_maintenance_log;
+DROP TABLE IF EXISTS equipment;
+DROP TABLE IF EXISTS staff;
+DROP TABLE IF EXISTS members;
 DROP TABLE IF EXISTS locations;
+DROP TABLE IF EXISTS payments;
+DROP TABLE IF EXISTS personal_training_sessions;
+DROP TABLE IF EXISTS member_health_metrics;
 
 CREATE TABLE locations (
     location_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -14,7 +26,6 @@ CREATE TABLE locations (
     opening_hours TEXT NOT NULL
     );
 
-DROP TABLE IF EXISTS members;
 
 CREATE TABLE members (
     member_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -28,7 +39,6 @@ CREATE TABLE members (
     emergency_contact_phone TEXT NOT NULL
     );
 
-DROP TABLE IF EXISTS staff;
 
 CREATE TABLE staff (
     staff_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,7 +55,6 @@ CREATE TABLE staff (
 
     );
 
-DROP TABLE IF EXISTS equipment;
 
 CREATE TABLE equipment (
     equipment_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -60,8 +69,6 @@ CREATE TABLE equipment (
         ON DELETE NO ACTION
     );
 
-DROP TABLE IF EXISTS classes;
-
 CREATE TABLE classes (
     class_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -74,7 +81,6 @@ CREATE TABLE classes (
         ON DELETE NO ACTION
     );
 
-DROP TABLE IF EXISTS class_schedule;
 
 CREATE TABLE class_schedule (
     schedule_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -90,7 +96,6 @@ CREATE TABLE class_schedule (
         ON DELETE NO ACTION
     );
 
-DROP TABLE IF EXISTS memberships;
 
 CREATE TABLE memberships (
     membership_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -104,7 +109,6 @@ CREATE TABLE memberships (
         ON DELETE NO ACTION
     );
 
-DROP TABLE IF EXISTS attendance;
 
 CREATE TABLE attendance (
     attendance_id INTEGER PRIMARY KEY AUTOINCREMENT ,
@@ -120,7 +124,6 @@ CREATE TABLE attendance (
         ON DELETE NO ACTION
     );
 
-DROP TABLE IF EXISTS class_attendance;
 
 CREATE TABLE class_attendance (
     class_attendance_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -135,7 +138,6 @@ CREATE TABLE class_attendance (
         ON DELETE NO ACTION
     );
 
-DROP TABLE IF EXISTS payments;
 
 CREATE TABLE payments (
     payment_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -149,7 +151,6 @@ CREATE TABLE payments (
         ON DELETE NO ACTION
     );
 
-DROP TABLE IF EXISTS personal_training_sessions;
 
 CREATE TABLE personal_training_sessions (
     session_id INTEGER PRIMARY KEY AUTOINCREMENT ,
@@ -167,7 +168,6 @@ CREATE TABLE personal_training_sessions (
         ON DELETE NO ACTION
     );
 
-DROP TABLE IF EXISTS member_health_metrics;
 
 CREATE TABLE member_health_metrics (
     metric_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -181,8 +181,6 @@ CREATE TABLE member_health_metrics (
         REFERENCES members(member_id)
         ON DELETE NO ACTION
     );
-
-DROP TABLE IF EXISTS equipment_maintenance_log;
 
 CREATE TABLE equipment_maintenance_log (
     log_id INTEGER PRIMARY KEY AUTOINCREMENT,

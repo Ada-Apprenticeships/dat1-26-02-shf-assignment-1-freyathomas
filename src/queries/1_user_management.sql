@@ -1,5 +1,4 @@
 .open fittrackpro.db
-.headers
 .mode column
 
 -- 1.1
