@@ -30,6 +30,7 @@ ORDER BY visit_count DESC
 LIMIT 1;
 
 
--- 6.4 
---SELECT l.name AS location_name, avg_daily_attendance
+-- 6.4 UNFINISHED IN FINAL VERSION
+--SELECT l.name AS location_name, 
+  --  avg_daily_attendance
 --FROM locations AS l
