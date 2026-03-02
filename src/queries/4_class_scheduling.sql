@@ -2,7 +2,9 @@
 .mode column
 
 -- 4.1 
-SELECT DISTINCT cs.class_id, c.name AS class_name, s.first_name AS instructor_name
+SELECT DISTINCT cs.class_id, 
+    c.name AS class_name, 
+    s.first_name AS instructor_name
 FROM class_schedule AS cs
 JOIN classes AS c ON cs.class_id = c.class_id
 JOIN staff AS s ON cs.staff_id = s.staff_id
@@ -10,7 +12,11 @@ WHERE s.position = 'Trainer'
 ORDER BY cs.class_id;
 
 -- 4.2 
-SELECT cs.class_id, c.name, cs.start_time, cs.end_time, c.capacity AS available_spots
+SELECT cs.class_id, 
+    c.name, 
+    cs.start_time, 
+    cs.end_time, 
+    c.capacity AS available_spots
 FROM class_schedule AS cs
 JOIN classes AS c ON cs.class_id = c.class_id
 WHERE date(cs.start_time) = '2025-02-01';
@@ -24,7 +30,9 @@ DELETE FROM class_attendance
 WHERE member_id = 3 AND schedule_id = 7;
 
 -- 4.5 
-SELECT cs.class_id, c.name AS class_name, COUNT(ca.attendance_status) AS registration_count
+SELECT cs.class_id, 
+    c.name AS class_name, 
+    COUNT(ca.attendance_status) AS registration_count
 FROM class_attendance AS ca
 JOIN class_schedule AS cs ON cs.schedule_id = ca.schedule_id
 JOIN classes AS c ON cs.class_id = c.class_id

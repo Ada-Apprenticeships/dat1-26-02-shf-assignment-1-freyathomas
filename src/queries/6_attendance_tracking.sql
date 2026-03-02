@@ -6,7 +6,9 @@ INSERT INTO attendance (member_id,location_id,check_in_time) VALUES
 (7,1,'2025-02-14 16:30:00');
 
 -- 6.2 
-SELECT strftime('%Y/%m/%d', check_in_time) AS visit_date, check_in_time, check_out_time
+SELECT strftime('%Y/%m/%d', check_in_time) AS visit_date, 
+    check_in_time, 
+    check_out_time
 FROM attendance
 WHERE member_id = 5;
 

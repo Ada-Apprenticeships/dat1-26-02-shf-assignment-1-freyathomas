@@ -2,7 +2,11 @@
 .mode column
 
 -- 5.1 
-SELECT m.member_id, m.first_name, m.last_name, ms.type AS membership_type, m.join_date
+SELECT m.member_id, 
+    m.first_name, 
+    m.last_name, 
+    ms.type AS membership_type, 
+    m.join_date
 FROM members AS m
 JOIN memberships AS ms ON m.member_id = ms.member_id
 WHERE ms.status = 'Active';
@@ -15,7 +19,11 @@ JOIN attendance AS a ON ms.member_id = a.member_id
 GROUP BY ms.type;
 
 -- 5.3 
-SELECT m.member_id, m.first_name, m.last_name, m.email, ms.end_date
+SELECT m.member_id, 
+    m.first_name,
+    m.last_name, 
+    m.email, 
+    ms.end_date
 FROM members AS m
 JOIN memberships AS ms ON m.member_id = ms.member_id
 WHERE strftime('%Y', ms.end_date) = '2025';

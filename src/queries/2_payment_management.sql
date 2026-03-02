@@ -6,7 +6,8 @@ INSERT INTO payments (member_id,amount,payment_date,payment_method,payment_type)
 (11,50.00,'now','Credit Card','Monthly membership fee');
 
 -- 2.2 
-SELECT strftime('%m', payment_date) AS month, SUM(amount) AS total_revenue
+SELECT strftime('%m', payment_date) AS month, 
+    SUM(amount) AS total_revenue
 FROM payments
 WHERE payment_type = 'Monthly membership fee' 
 GROUP BY month
@@ -14,6 +15,9 @@ ORDER BY month;
 
 
 -- 2.3 
-SELECT payment_id, amount, payment_date, payment_method
+SELECT payment_id, 
+    amount, 
+    payment_date, 
+    payment_method
 FROM payments
 WHERE payment_type = 'Day pass';

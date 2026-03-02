@@ -3,7 +3,11 @@
 .mode column
 
 -- 1.1
-SELECT member_id, first_name, last_name, email, join_date
+SELECT member_id, 
+    first_name, 
+    last_name, 
+    email, 
+    join_date
 FROM members;
 
 -- 1.2
@@ -17,7 +21,10 @@ SELECT COUNT(*) AS myCount
 FROM members;
 
 -- 1.4
-SELECT m.member_id, m.first_name, m.last_name, COUNT(c.member_id) AS registration_count
+SELECT m.member_id, 
+    m.first_name, 
+    m.last_name, 
+    COUNT(c.member_id) AS registration_count
 FROM members AS m
 JOIN class_attendance AS c 
     ON m.member_id = c.member_id
@@ -29,7 +36,10 @@ ORDER BY registration_count DESC
 LIMIT 1;
 
 -- 1.5
-SELECT m.member_id, m.first_name, m.last_name, COUNT(c.member_id) AS registration_count
+SELECT m.member_id, 
+    m.first_name, 
+    m.last_name, 
+    COUNT(c.member_id) AS registration_count
 FROM members AS m
 LEFT JOIN class_attendance AS c 
     ON m.member_id = c.member_id
