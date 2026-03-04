@@ -7,7 +7,7 @@ INSERT INTO payments (member_id,amount,payment_date,payment_method,payment_type)
 
 -- 2.2 
 SELECT strftime('%m', payment_date) AS month, 
-    SUM(amount) AS total_revenue
+    SUM(amount) AS total_revenue --SUM totals everything in the column
 FROM payments
 WHERE payment_type = 'Monthly membership fee' 
 GROUP BY month

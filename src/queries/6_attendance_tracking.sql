@@ -14,7 +14,7 @@ WHERE member_id = 5;
 
 -- 6.3 
 SELECT 
-    CASE strftime('%w', check_in_time)
+    CASE strftime('%w', check_in_time) -- uses case statements to match the number returned from %W to its correct day name
         WHEN '0' THEN 'Sunday'
         WHEN '1' THEN 'Monday'
         WHEN '2' THEN 'Tuesday'

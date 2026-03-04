@@ -2,7 +2,7 @@
 .mode column
 
 -- 4.1 
-SELECT DISTINCT cs.class_id, 
+SELECT DISTINCT cs.class_id, --using distinct to ensure class_id is unique
     c.name AS class_name, 
     s.first_name AS instructor_name
 FROM class_schedule AS cs
@@ -39,7 +39,7 @@ JOIN classes AS c ON cs.class_id = c.class_id
 WHERE ca.attendance_status = 'Registered'
 GROUP BY cs.class_id, c.name
 ORDER BY registration_count DESC
-LIMIT 1;
+LIMIT 1; --limits to get the top registered class
 
 -- 4.6 
 SELECT AVG(classes_per_member)

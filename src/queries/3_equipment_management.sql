@@ -17,7 +17,7 @@ GROUP BY type;
 
 -- 3.3 
 SELECT type, 
-    AVG(julianday('now') - julianday(purchase_date)) AS avg_age_days
+    AVG(julianday('now') - julianday(purchase_date)) AS avg_age_days -- using julianday to calculate dates easily
 FROM equipment
 WHERE type IN ('Cardio', 'Strength')
 GROUP BY type;

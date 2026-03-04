@@ -12,7 +12,7 @@ ORDER BY position;
 
 -- 7.2 
 SELECT p.staff_id AS trainer_id, 
-    s.first_name || ' ' || s.last_name AS trainer_name, 
+    s.first_name || ' ' || s.last_name AS trainer_name, -- joins together the last name and first name
     COUNT(p.session_id) AS session_count
 FROM personal_training_sessions AS p
 JOIN staff AS s ON s.staff_id = p.staff_id

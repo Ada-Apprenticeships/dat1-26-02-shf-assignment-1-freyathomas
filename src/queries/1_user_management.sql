@@ -16,7 +16,7 @@ SET phone_number='07000 10005',
 WHERE member_id = 5;
 
 -- 1.3
-SELECT COUNT(*) AS myCount
+SELECT COUNT(*) AS myCount -- * counts everything 
 FROM members;
 
 -- 1.4
@@ -31,8 +31,8 @@ GROUP BY
     m.member_id, 
     m.first_name, 
     m.last_name
-ORDER BY registration_count DESC
-LIMIT 1;
+ORDER BY registration_count DESC -- descending to get highest at the top
+LIMIT 1; -- limiting by 1 to get the top result
 
 -- 1.5
 SELECT m.member_id, 
@@ -46,8 +46,8 @@ GROUP BY
     m.member_id, 
     m.first_name, 
     m.last_name
-ORDER BY registration_count ASC
-LIMIT 1;
+ORDER BY registration_count ASC --ascending to get the lowest at the top
+LIMIT 1; --limits by 1 to get the lowest (which is at the top)
 
 -- 1.6
 SELECT COUNT(*) AS Count
